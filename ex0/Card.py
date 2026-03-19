@@ -7,7 +7,7 @@ class Card(ABC):
     self.cost = cost
     self.rarity = rarity
 
-  @absctractmethod
+  @abstractmethod
   def play(self, game_state: dict) -> Dict:
     pass
 
