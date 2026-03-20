@@ -34,6 +34,7 @@ class Deck:
         creatures = 0
         spells = 0
         artifacts = 0
+        total_cost = 0
 
         for card in self.cards:
 
