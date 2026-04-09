@@ -1,35 +1,57 @@
-from ex4.Match import Match
+from ex0 import FlameFactory, AquaFactory
+from ex1 import HealingCreatureFactory, TransformCreatureFactory
+from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy, InvalidStrategyError
 
+def battle(opponents):
+    print("*** Tournament ***")
+    print(f"{len(opponents)} opponents involved")
 
-class Tournament:
+    try:
+        for i in range(len(opponents)):
+            for j in range(i + 1, len(opponents)):
 
-    def __init__(self):
+                factory1, strategy1 = opponents[i]
+                factory2, strategy2 = opponents[j]
 
-        self.players = []
+                c1 = factory1.create_base()
+                c2 = factory2.create_base()
 
-    def register_player(self, player):
+                print()
+                print("* Battle *")
+                print(c1.describe())
+                print(" vs.")
+                print(c2.describe())
+                print(" now fight!")
 
-        self.players.append(player)
+                # Estratégia 1
+                for action in strategy1.act(c1):
+                    print(action)
 
-    def start(self):
+                # Estratégia 2
+                for action in strategy2.act(c2):
+                    print(action)
 
-        results = []
+    except InvalidStrategyError as e:
+        print(f"Battle error, aborting tournament: {e}")
 
-        for i in range(0, len(self.players), 2):
+print("Tournament 0 (basic)")
+t0 = [
+    (FlameFactory(), NormalStrategy()),
+    (HealingCreatureFactory(), DefensiveStrategy())
+]
+battle(t0)
 
-            player1 = self.players[i]
-            player2 = self.players[i + 1]
+print("Tournament 1 (error)")
+t1 = [
+    (FlameFactory(), AggressiveStrategy()),  # inválido
+    (HealingCreatureFactory(), DefensiveStrategy())
+]
+battle(t1)
 
-            match = Match(player1, player2)
-
-            result = match.play()
-
-            results.append(result)
-
-        return results
-
-    def leaderboard(self):
-
-        ranking = sorted(self.players, key=lambda p: p.wins, reverse=True)
-
-        return [p.get_stats() for p in ranking]
+print("Tournament 2 (multiple)")
+t2 = [
+    (AquaFactory(), NormalStrategy()),
+    (HealingCreatureFactory(), DefensiveStrategy()),
+    (TransformCreatureFactory(), AggressiveStrategy())
+]
+battle(t2)
