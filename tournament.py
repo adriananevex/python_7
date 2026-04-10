@@ -1,8 +1,33 @@
 from ex0 import FlameFactory, AquaFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
-from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy, InvalidStrategyError
+from ex2 import (
+    NormalStrategy,
+    AggressiveStrategy,
+    DefensiveStrategy,
+    InvalidStrategyError,
+)
+
+
+def summarize_opponents(opponents):
+    factory_labels = {
+        "FlameFactory": "Flameling",
+        "AquaFactory": "Aquabub",
+        "HealingCreatureFactory": "Healing",
+        "TransformCreatureFactory": "Transform",
+    }
+    pairs = []
+    for factory, strategy in opponents:
+        factory_name = factory.__class__.__name__
+        factory_name = factory_labels.get(factory_name, factory_name)
+        strategy_name = strategy.__class__.__name__
+        if strategy_name.endswith("Strategy"):
+            strategy_name = strategy_name[:-8]
+        pairs.append(f"({factory_name}+{strategy_name})")
+    return f"[ {', '.join(pairs)} ]"
+
 
 def battle(opponents):
+    print(summarize_opponents(opponents))
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
 
@@ -34,6 +59,8 @@ def battle(opponents):
     except InvalidStrategyError as e:
         print(f"Battle error, aborting tournament: {e}")
 
+
+print()
 print("Tournament 0 (basic)")
 t0 = [
     (FlameFactory(), NormalStrategy()),
@@ -41,6 +68,7 @@ t0 = [
 ]
 battle(t0)
 
+print()
 print("Tournament 1 (error)")
 t1 = [
     (FlameFactory(), AggressiveStrategy()),  # inválido
@@ -48,6 +76,7 @@ t1 = [
 ]
 battle(t1)
 
+print()
 print("Tournament 2 (multiple)")
 t2 = [
     (AquaFactory(), NormalStrategy()),

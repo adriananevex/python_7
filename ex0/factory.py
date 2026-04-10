@@ -11,12 +11,14 @@ class CreatureFactory(ABC):
     def create_evolved(self) -> Creature:
         pass
 
+
 class FlameFactory(CreatureFactory):
     def create_base(self):
         return Flameling()
 
     def create_evolved(self):
         return Pyrodon()
+
 
 class AquaFactory(CreatureFactory):
     def create_base(self):

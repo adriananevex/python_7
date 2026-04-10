@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Creature(ABC):
     def __init__(self, name: str, type_: str):
         self.name = name
@@ -12,12 +13,14 @@ class Creature(ABC):
     def attack(self):
         pass
 
+
 class Flameling(Creature):
     def __init__(self):
         super().__init__("Flameling", "Fire")
 
     def attack(self):
         return "Flameling uses Ember!"
+
 
 class Pyrodon(Creature):
     def __init__(self):
@@ -33,6 +36,7 @@ class Aquabub(Creature):
 
     def attack(self):
         return "Aquabub uses Water Gun!"
+
 
 class Torragon(Creature):
     def __init__(self):
